@@ -5,90 +5,213 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Веб-квест: Взлом системы</title>
   <style>
-    body {font-family: Arial; background:#0f172a; color:#e2e8f0; margin:0}
-    header {background:#020617; padding:20px; text-align:center}
-    section {padding:20px; margin:15px; border-radius:12px; background:#1e293b}
-    h1,h2{color:#38bdf8}
-    button{background:#38bdf8;border:none;padding:10px;border-radius:8px;cursor:pointer;margin:5px}
-    .hidden{display:none}
-    .role{display:inline-block;padding:10px;border-radius:10px;cursor:pointer;border:2px solid transparent}
-    .role.selected{border-color:#38bdf8;background:#0f172a}
-    img{width:100%;max-height:200px;object-fit:cover;border-radius:10px}
+    body{
+      margin:0;
+      font-family:Arial, sans-serif;
+      background:linear-gradient(135deg,#0f172a,#020617);
+      color:#e2e8f0;
+    }
+
+    /* NAVBAR */
+    nav{
+      position:sticky;
+      top:0;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:12px 20px;
+      background:#0b1220;
+      border-bottom:1px solid #1e293b;
+      z-index:1000;
+    }
+
+    nav h1{
+      font-size:16px;
+      color:#38bdf8;
+    }
+
+    nav button{
+      background:transparent;
+      border:1px solid #38bdf8;
+      color:#38bdf8;
+      padding:6px 10px;
+      border-radius:8px;
+      cursor:pointer;
+      margin-left:5px;
+    }
+
+    nav button:hover{
+      background:#38bdf8;
+      color:#000;
+    }
+
+    section{
+      display:none;
+      padding:25px;
+      margin:15px;
+      border-radius:14px;
+      background:rgba(30,41,59,0.9);
+      box-shadow:0 0 20px rgba(0,0,0,0.4);
+    }
+
+    section.active{
+      display:block;
+    }
+
+    h2{
+      color:#38bdf8;
+    }
+
+    button{
+      background:#38bdf8;
+      border:none;
+      padding:10px 14px;
+      border-radius:10px;
+      cursor:pointer;
+      margin-top:10px;
+    }
+
+    button:hover{
+      background:#0ea5e9;
+    }
+
+    select,input{
+      padding:10px;
+      border-radius:8px;
+      border:none;
+      margin-top:10px;
+      width:100%;
+      max-width:300px;
+    }
+
+    img{
+      width:100%;
+      max-height:220px;
+      object-fit:cover;
+      border-radius:12px;
+      margin-top:10px;
+    }
+
+    .box{
+      padding:10px;
+      background:#0b1220;
+      border-radius:10px;
+      margin-top:10px;
+    }
   </style>
 </head>
 <body>
-<header>
-<h1>💻 Взлом системы</h1>
-</header>
 
-<section id="intro">
-<h2>Введение</h2>
-<p>Хакер атаковал систему. Выберите роль и остановите вирус!</p>
-<img src="https://images.unsplash.com/photo-1518770660439-4636190af475">
-<button onclick="show('roles')">Начать</button>
+<!-- NAVBAR -->
+<nav>
+  <h1>💻 Квест: Взлом системы</h1>
+  <div>
+    <button onclick="show('home')">Главная</button>
+    <button onclick="show('roles')">Роли</button>
+  </div>
+</nav>
+
+<!-- ГЛАВНАЯ -->
+<section id="home" class="active">
+  <h2>📌 Главная</h2>
+  <p>Мир цифровых систем атакован неизвестным хакером. Вирус разрушает данные и сайты.</p>
+  <p>Ваша задача — пройти задания, выбрать роль и остановить угрозу.</p>
+  <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b">
 </section>
 
-<section id="roles" class="hidden">
-<h2>Выбор роли</h2>
-<div class="role" onclick="selectRole(this,'prog')">👨‍💻 Программист</div>
-<div class="role" onclick="selectRole(this,'safe')">🔐 Кибербезопасник</div>
-<div class="role" onclick="selectRole(this,'web')">🌐 Веб-разработчик</div>
-<div class="role" onclick="selectRole(this,'data')">📊 Аналитик</div>
-<p id="roleText"></p>
-<button onclick="startGame()">Продолжить</button>
+<!-- РОЛИ -->
+<section id="roles">
+  <h2>🎭 Выбор роли</h2>
+  <p>Выберите специализацию:</p>
+
+  <select id="roleSelect">
+    <option value="">-- выберите роль --</option>
+    <option value="prog">👨‍💻 Программист</option>
+    <option value="safe">🔐 Кибербезопасник</option>
+    <option value="web">🌐 Веб-разработчик</option>
+    <option value="data">📊 Аналитик</option>
+  </select>
+
+  <button onclick="startGame()">Начать квест</button>
 </section>
 
 <!-- ПРОГРАММИСТ -->
-<section id="prog" class="hidden">
-<h2>Задание программиста</h2>
-<p>Исправь код:<br>for i in range(5 print(i)</p>
-<input id="a1"><br>
-<button onclick="checkProg()">Проверить</button>
-<p id="r1"></p>
+<section id="prog">
+  <h2>👨‍💻 Программист</h2>
+  <div class="box">for i in range(5 print(i)</div>
+  <p>Исправьте ошибку в коде</p>
+  <input id="a1">
+  <button onclick="checkProg()">Проверить</button>
+  <p id="r1"></p>
 </section>
 
-<!-- КИБЕРБЕЗ -->
-<section id="safe" class="hidden">
-<h2>Задание кибербезопасника</h2>
-<p>Расшифруй шифр Цезаря (сдвиг 1): IFMMP</p>
-<input id="a2"><br>
-<button onclick="checkSafe()">Проверить</button>
-<p id="r2"></p>
+<!-- КИБЕР -->
+<section id="safe">
+  <h2>🔐 Кибербезопасность</h2>
+  <p>Шифр Цезаря: IFMMP</p>
+  <input id="a2">
+  <button onclick="checkSafe()">Проверить</button>
+  <p id="r2"></p>
 </section>
 
 <!-- ВЕБ -->
-<section id="web" class="hidden">
-<h2>Задание веб-разработчика</h2>
-<p>Что не так в HTML?<br>&lt;h1&gt;Привет&lt;/h2&gt;</p>
-<input id="a3"><br>
-<button onclick="checkWeb()">Проверить</button>
-<p id="r3"></p>
+<section id="web">
+  <h2>🌐 Веб-разработка</h2>
+  <div class="box">&lt;h1&gt;Привет&lt;/h2&gt;</div>
+  <input id="a3">
+  <button onclick="checkWeb()">Проверить</button>
+  <p id="r3"></p>
 </section>
 
 <!-- АНАЛИТИК -->
-<section id="data" class="hidden">
-<h2>Задание аналитика</h2>
-<p>Найди среднее: 2,4,6,8</p>
-<input id="a4"><br>
-<button onclick="checkData()">Проверить</button>
-<p id="r4"></p>
+<section id="data">
+  <h2>📊 Аналитика</h2>
+  <p>Найдите среднее: 2,4,6,8</p>
+  <input id="a4">
+  <button onclick="checkData()">Проверить</button>
+  <p id="r4"></p>
 </section>
 
-<section id="final" class="hidden">
-<h2>ФИНАЛ</h2>
-<p>Вирус остановлен! 🎉</p>
+<!-- ФИНАЛ -->
+<section id="final">
+  <h2>🏁 Финал</h2>
+  <p>Вы остановили вирус и спасли систему! 🎉</p>
 </section>
 
 <script>
-let role=null;
-function show(id){document.querySelectorAll('section').forEach(s=>s.classList.add('hidden'));document.getElementById(id).classList.remove('hidden')}
-function selectRole(el,r){document.querySelectorAll('.role').forEach(x=>x.classList.remove('selected'));el.classList.add('selected');role=r;document.getElementById('roleText').innerText='Вы выбрали роль'}
-function startGame(){if(!role){alert('Выбери роль');return}show(role)}
+let role="";
 
-function checkProg(){let a=document.getElementById('a1').value.toLowerCase();if(a.includes(')')){document.getElementById('r1').innerText='Верно';show('final')}else{document.getElementById('r1').innerText='Ошибка'}}
-function checkSafe(){let a=document.getElementById('a2').value.toUpperCase();if(a==='HELLO'){document.getElementById('r2').innerText='Верно';show('final')}else{document.getElementById('r2').innerText='Ошибка'}}
-function checkWeb(){let a=document.getElementById('a3').value.toLowerCase();if(a.includes('h1')){document.getElementById('r3').innerText='Верно';show('final')}else{document.getElementById('r3').innerText='Ошибка'}}
-function checkData(){let a=document.getElementById('a4').value; if(a==5){document.getElementById('r4').innerText='Верно';show('final')}else{document.getElementById('r4').innerText='Ошибка'}}
+function show(id){
+  document.querySelectorAll('section').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function startGame(){
+  role=document.getElementById('roleSelect').value;
+  if(!role){alert('Выберите роль!');return;}
+  show(role);
+}
+
+function checkProg(){
+  let a=document.getElementById('a1').value.toLowerCase();
+  if(a.includes(')')){document.getElementById('r1').innerText='Верно!';show('final');}else{document.getElementById('r1').innerText='Ошибка';}
+}
+
+function checkSafe(){
+  let a=document.getElementById('a2').value.toUpperCase();
+  if(a==='HELLO'){document.getElementById('r2').innerText='Верно!';show('final');}else{document.getElementById('r2').innerText='Ошибка';}
+}
+
+function checkWeb(){
+  let a=document.getElementById('a3').value.toLowerCase();
+  if(a.includes('h1')){document.getElementById('r3').innerText='Верно!';show('final');}else{document.getElementById('r3').innerText='Ошибка';}
+}
+
+function checkData(){
+  let a=document.getElementById('a4').value;
+  if(a==5){document.getElementById('r4').innerText='Верно!';show('final');}else{document.getElementById('r4').innerText='Ошибка';}
+}
 </script>
+
 </body>
 </html>
